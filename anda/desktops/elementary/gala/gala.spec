@@ -2,7 +2,7 @@
 
 Name:           gala
 Summary:        Gala window manager
-Version:        7.0.2
+Version:        7.1.1
 Release:        1%{?dist}
 License:        GPL-3.0-or-later
 
@@ -31,9 +31,9 @@ BuildRequires:  pkgconfig(granite) >= 5.4.0
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(libbamf3)
 BuildRequires:  pkgconfig(libcanberra)
-BuildRequires:  pkgconfig(mutter-clutter-11)
-BuildRequires:  pkgconfig(mutter-cogl-11)
-BuildRequires:  pkgconfig(mutter-cogl-pango-11)
+BuildRequires:  pkgconfig(mutter-clutter-12)
+BuildRequires:  pkgconfig(mutter-cogl-12)
+BuildRequires:  pkgconfig(mutter-cogl-pango-12)
 
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -92,10 +92,12 @@ desktop-file-validate \
     %{buildroot}/%{_datadir}/applications/gala*.desktop
 
 #appstream-util validate-relax --nonet \
-#    %%{buildroot}/%%{_datadir}/metainfo/%%{name}.appdata.xml
+#    %%{buildroot}/%%{_datadir}/metainfo/%%{name}.metainfo.xml
 
 
 %files -f gala.lang
+%doc README.md
+%license COPYING
 %config(noreplace) %{_sysconfdir}/xdg/autostart/gala-daemon.desktop
 
 %{_bindir}/gala
@@ -106,7 +108,7 @@ desktop-file-validate \
 %{_datadir}/applications/gala*.desktop
 %{_datadir}/glib-2.0/schemas/20_elementary.pantheon.wm.gschema.override
 %{_datadir}/glib-2.0/schemas/org.pantheon.desktop.gala.gschema.xml
-%{_datadir}/metainfo/%{name}.appdata.xml
+%{_datadir}/metainfo/%{name}.metainfo.xml
 
 %files libs
 %doc AUTHORS README.md
@@ -128,8 +130,8 @@ desktop-file-validate \
 
 
 %changelog
-* Wed Nov 09 2022 Cappy Ishihara <cappy@cappuchino.xyz>
+* Wed Nov 09 2022 Cappy Ishihara <cappy@cappuchino.xyz> - 6.3.3-1
 - Rebuild
 
-* Sat Oct 15 2022 windowsboy111 <windowsboy111@fyralabs.com>
+* Sat Oct 15 2022 windowsboy111 <windowsboy111@fyralabs.com> - 6.3.1-1
 - Repackaged for Terra

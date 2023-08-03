@@ -1,10 +1,10 @@
 %global forgeurl https://gitlab.com/ubports/development/core/lomiri
-%global commit 49d67f32d4710ce5fb9597fe52b97b6c152d5b4f
+%global commit 38d35e8fecd4f12864c0c49ce06bbda38e9cb7b0
 %forgemeta
 
 Name:          lomiri
-Version:       0.1.2
-Release:       %autorelease
+Version:       0.1.3
+Release:       1%{?dist}
 Summary:       A convergent desktop environment by Ubports
 
 License:       GPLv3 AND LGPLv3
@@ -55,11 +55,17 @@ BuildRequires: qt5-qtbase-private-devel
 BuildRequires: qt5-qtdeclarative-devel
 BuildRequires: systemd-rpm-macros
 Recommends:    lomiri-session
+# Most of these are for other libs that rpm doesn't find
+Requires:      libusermetrics
+Requires:      deviceinfo
 Requires:      lomiri-system-settings
 Requires:      qmenumodel
 Requires:      xorg-x11-server-Xwayland
+Requires:      ayatana-indicator-sound
 Requires:      ayatana-indicator-messages
 Requires:      ayatana-indicator-datetime
+Requires:      ayatana-indicator-notifications
+Requires:      ayatana-indicator-session
 Requires:      lomiri-sounds
 Requires:      lomiri-ui-toolkit
 Requires:      lomiri-download-manager
@@ -105,11 +111,12 @@ install -Dm644 data/test.sensors %{buildroot}%{_sysconfdir}/lomirisensors
 %ldconfig_scriptlets
 
 %files -f %{name}.lang
+%doc README.md
 %license COPYING COPYING.LGPL
 %dir %{_sysconfdir}/lomiri
-%{_sysconfdir}/lomiri/devices.conf
+%config %{_sysconfdir}/lomiri/devices.conf
 %dir %{_sysconfdir}/lomirisensors
-%{_sysconfdir}/lomirisensors/test.sensors
+%config %{_sysconfdir}/lomirisensors/test.sensors
 %{_bindir}/indicators-client
 %{_bindir}/lomiri
 %{_userunitdir}/*.service

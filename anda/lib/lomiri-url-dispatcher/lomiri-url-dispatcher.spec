@@ -1,10 +1,10 @@
 %global forgeurl https://gitlab.com/ubports/development/core/lomiri-url-dispatcher
-%global commit 0f6518439bdec30816feb0ede9d52080f50d1425
+%global commit 95a633ae20144bf2fda428f89f169d7c29c02cc3
 %forgemeta
 
 Name:           lomiri-url-dispatcher
-Version:        0.1.2
-Release:        %autorelease
+Version:        0.1.3
+Release:        1%{?dist}
 Summary:        A small library for handling URLs over dbus
 
 License:        LGPL-3.0
@@ -29,12 +29,12 @@ Requires:      lomiri-ui-toolkit
 ExclusiveArch: x86_64 aarch64
 
 %description
-Lomiri-url-dispatcher is a small handler to take URLs and do what is appropriate with them.
-That could be anything from launching a web browser to just starting an
-application.  This is done over DBus because application confinement doesn't
-allow for doing it from a confined application otherwise.  It's important
-the that applications can't know about each other, so this is a fire and forget
-type operation.
+Lomiri-url-dispatcher is a small handler to take URLs and do what is
+appropriate with them. That could be anything from launching a web browser to
+just starting an application.  This is done over DBus because application
+confinement doesn't allow for doing it from a confined application otherwise.
+It's important the that applications can't know about each other, so this is a
+fire and forget type operation.
 
 %package devel
 Summary:  Lomiri-url-dispatcher development files

@@ -3,8 +3,8 @@
 
 Name:           elementary-onboarding
 Summary:        Onboarding app for new users
-Version:        7.0.1
-Release:        %autorelease
+Version:        7.1.0
+Release:        2%{?dist}
 License:        GPL-3.0-or-later
 
 URL:            https://github.com/elementary/onboarding
@@ -62,7 +62,7 @@ desktop-file-validate \
     %{buildroot}/%{_sysconfdir}/xdg/autostart/%{appname}.desktop
 
 appstream-util validate-relax --nonet \
-    %{buildroot}/%{_datadir}/metainfo/%{appname}.appdata.xml
+    %{buildroot}/%{_datadir}/metainfo/%{appname}.metainfo.xml
 
 
 %files -f %{appname}.lang
@@ -75,10 +75,11 @@ appstream-util validate-relax --nonet \
 
 %{_datadir}/applications/%{appname}.desktop
 %{_datadir}/glib-2.0/schemas/%{appname}.gschema.xml
-%{_datadir}/metainfo/%{appname}.appdata.xml
+%{_datadir}/metainfo/%{appname}.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/%{appname}.svg
+%config %_sysconfdir/guest-session/prefs.sh
 
 
 %changelog
-* Sat Oct 15 2022 windowsboy111 <windowsboy111@fyralabs.com>
+* Sat Oct 15 2022 windowsboy111 <windowsboy111@fyralabs.com> - 6.1.0-1
 - Repackaged for Terra

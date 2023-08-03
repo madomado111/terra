@@ -6,7 +6,7 @@
 
 Name:          unityx-shell
 Version:       1.7.7
-Release:       %autorelease
+Release:       2%?dist
 Summary:       UnityX is a smaller shell based on Unity7
 
 License:       GPL-3.0 AND LGPL-3.0
@@ -15,6 +15,7 @@ Source0:       %{url}/-/archive/%commit/unityx-%commit.tar.bz2
 Source2:       https://gitlab.xfce.org/panel-plugins/xfce4-windowck-plugin/-/commit/dee596492f006d02e2b39abd072ddd7b37fefe82.diff
 Patch0:        0001-Remove-social-scope.patch
 
+BuildRequires: fdupes
 BuildRequires: cmake
 BuildRequires: g++
 BuildRequires: gcc
@@ -26,7 +27,7 @@ BuildRequires: zeitgeist-devel
 BuildRequires: libappstream-glib-devel
 BuildRequires: libdbusmenu-devel
 BuildRequires: bamf-devel
-BuildRequires: libindicator-gtk3-devel
+BuildRequires: terra-libindicator-gtk3-devel
 BuildRequires: json-glib-devel
 BuildRequires: libnotify-devel
 BuildRequires: libsigc++20-devel
@@ -38,6 +39,7 @@ BuildRequires: boost-devel
 BuildRequires: pkgconfig(nux-4.0)
 BuildRequires: pkgconfig(libstartup-notification-1.0)
 BuildRequires: pkgconfig(unity-protocol-private)
+BuildRequires: libunity libunity-devel
 # unityx-shell-xfce4-windowck-plugin
 BuildRequires: pkgconfig(libwnck-3.0)
 BuildRequires: pkgconfig(libxfconf-0)
@@ -61,7 +63,7 @@ Requires:      geis-devel
 Requires:      unity-settings-daemon
 Requires:      unity-gtk3-module
 Requires:      unity-gtk2-module
-Requires:      libindicator-gtk3
+Requires:      terra-libindicator-gtk3
 Requires:      plotinus%{?_isa} = %{version}-%{release}
 Requires:      bamf-daemon
 Requires:      xbindkeys
@@ -74,7 +76,8 @@ Requires:      xfce4-vala-panel-appmenu-plugin
 Requires:      xfwm4
 
 %description
-UnityX is a shell based off code from Unity7 with lighter dependencies and more customizability.
+UnityX is a shell based off code from Unity7 with lighter dependencies and more
+customizability.
 
 %package xfce4-windowck-plugin
 Summary:  Core library for the Unity shell
@@ -97,7 +100,6 @@ This package contains the development files the core Unity library.
 
 %package -n plotinus
 Summary:  Automatic testing for Unity
-Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description -n plotinus
 This package contains the autopilot framework, which allows for triggering
@@ -157,7 +159,11 @@ chrpath --delete %{buildroot}%{_libdir}/libunityx-core-6.0.so.9.0.0
 
 pushd %{buildroot}
 ln -s %{_libdir}/unity .%{_libdir}/unityx
+rm -rf .%{_datadir}/unityx
+ln -s %{_datadir}/unity .%{_datadir}/unityx
 popd
+
+%fdupes %buildroot%_datadir/themes/
 
 %find_lang unityx
 %find_lang xfce4-windowck-plugin
@@ -173,21 +179,14 @@ fi
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 %files -f unityx.lang
-%doc AUTHORS ChangeLog INSTALL README.md
+%doc AUTHORS ChangeLog README.md
 %license COPYING COPYING.LGPL
 %{_bindir}/unityx*
 %{_libdir}/unityx
 %{_libdir}/libunityx-core-6.0.so.*
 %{_datadir}/glib-2.0/schemas/org.unityd.UnityX.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.unityd.UnityX.user-interface.gschema.xml
-%dir %{_datadir}/unityx
-%dir %{_datadir}/unityx/icons
-%{_datadir}/unityx/icons/dash-widgets.json
-%{_datadir}/unityx/icons/*.png
-%{_datadir}/unityx/icons/*.svg
-%{_datadir}/unityx/icons/searchingthedashlegalnotice.html
-%dir %{_datadir}/unityx/themes/
-%{_datadir}/unityx/themes/dash-widgets.json
+%{_datadir}/unityx
 %{_datadir}/xsessions/unityx.desktop
 
 %files -n plotinus

@@ -3,8 +3,8 @@
 
 Name:           elementary-greeter
 Summary:        LightDM Login Screen for the elementary desktop
-Version:        6.1.1
-Release:        %autorelease
+Version:        7.0.0
+Release:        1%{?dist}
 License:        GPL-3.0
 
 URL:            https://github.com/elementary/greeter
@@ -16,6 +16,7 @@ BuildRequires:  gettext
 BuildRequires:  libappstream-glib
 BuildRequires:  meson
 BuildRequires:  vala
+BuildRequires:  fdupes
 
 BuildRequires:  mesa-libEGL-devel
 
@@ -33,9 +34,9 @@ BuildRequires:  pkgconfig(granite) >= 5.0
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(libhandy-1)
 BuildRequires:  pkgconfig(liblightdm-gobject-1)
-BuildRequires:  pkgconfig(mutter-clutter-11)
-BuildRequires:  pkgconfig(mutter-cogl-11)
-BuildRequires:  pkgconfig(mutter-cogl-pango-11)
+BuildRequires:  pkgconfig(mutter-clutter-12)
+BuildRequires:  pkgconfig(mutter-cogl-12)
+BuildRequires:  pkgconfig(mutter-cogl-pango-12)
 BuildRequires:  pkgconfig(x11)
 
 Provides:       pantheon-greeter = %{version}-%{release}
@@ -67,7 +68,7 @@ The elementary Greeter is a styled Login Screen for LightDM.
 
 
 %prep
-%autosetup -n %{srcname}-%{version} -p1
+%autosetup -n %{srcname}-%{version}
 
 
 %build
@@ -80,14 +81,15 @@ The elementary Greeter is a styled Login Screen for LightDM.
 
 %find_lang %{appname}
 
+%fdupes %buildroot%_datadir/icons/hicolor/
+
 # install LightDM configuration file
 mkdir -p %{buildroot}%{_sysconfdir}/lightdm/lightdm.conf.d
 install -pm 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/lightdm/lightdm.conf.d/
 
 
 %check
-appstream-util validate-relax --nonet \
-    %{buildroot}/%{_datadir}/metainfo/%{appname}.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{appname}.metainfo.xml
 
 
 %files -f %{appname}.lang
@@ -101,9 +103,10 @@ appstream-util validate-relax --nonet \
 %{_sbindir}/%{appname}
 
 %{_datadir}/xgreeters/%{appname}.desktop
-%{_datadir}/metainfo/%{appname}.appdata.xml
+%{_datadir}/metainfo/%{appname}.metainfo.xml
+%{_datadir}/lightdm/lightdm.conf.d/40-%appname.conf
 
 
 %changelog
-* Sat Oct 15 2022 windowsboy111 <windowsboy111@fyralabs.com>
+* Sat Oct 15 2022 windowsboy111 <windowsboy111@fyralabs.com> - 6.1.0-1
 - Repackaged for Terra

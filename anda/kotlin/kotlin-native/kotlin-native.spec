@@ -2,7 +2,7 @@
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Name:           kotlin-native
-Version:        1.8.20
+Version:        1.9.0
 Release:        1%{?dist}
 Summary:        LLVM backend for the Kotlin compiler
 ExclusiveArch:  x86_64
@@ -32,6 +32,8 @@ tar -xf %{SOURCE0} && cd kotlin-native-linux-x86_64-%{version}
 sed -i "s|\(DIR *= *\).*|\1%{_bindir}|" bin/*
 sed -i "s|\(KONAN_HOME *= *\).*|\1%{_datadir}/%{name}|" bin/*
 
+
+%build
 
 %install
 rm -rf %{buildroot} && mkdir -p %{buildroot}%{_bindir}/ && cd kotlin-native-linux-x86_64-%{version}
